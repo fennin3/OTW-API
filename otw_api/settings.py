@@ -33,11 +33,10 @@ SECRET_KEY = 'r#86&b7q*4!&^-2hg&gq#&30h-df_)533tfv@3&i(s#v(w^hqf'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["www.otwapi.herokuapp.com", "otwapi.herokuapp.com", "localhost"]
+ALLOWED_HOSTS = ["www.otwapi.herokuapp.com", "otwapi.herokuapp.com", "localhost", "otwapi-prod.herokuapp.com", "www.otwapi-prod.herokuapp.com"]
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
