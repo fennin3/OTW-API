@@ -45,7 +45,7 @@ class Rating(models.Model):
     stars = models.FloatField(validators=[MinValueValidator(0.0),MaxValueValidator(5.0)])
 
     def __str__(self):
-        return str(self.product)+"---"+str(self.rater)
+        return str(self.post)+"---"+str(self.rater)
 
 
 class WeeklyWinner(models.Model):
