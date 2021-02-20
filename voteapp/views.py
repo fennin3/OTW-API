@@ -7,14 +7,17 @@ from .models import PostCategory, WeeklyPost, WeeklyWinner
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 
-class PostCategoryListAPIView(APIView):
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (TokenAuthentication)
-    def list(self, request):
-        postcats = PostCategory.objects.all()
-        data = PostCategorySerializer(postcats, many=True).data
-        self.check_object_permissions(self.request, postcats)
-        return Response(data)
+class PostCategoryListAPIView(generics.ListAPIView):
+    serializer_class = PostCategorySerializer
+    queryset = PostCategory.objects.all()
+
+    # permission_classes = (IsAuthenticated,)
+    # authentication_classes = (TokenAuthentication)
+    # def list(self, request):
+    #     postcats = PostCategory.objects.all()
+    #     data = PostCategorySerializer(postcats, many=True).data
+    #     self.check_object_permissions(self.request, postcats)
+    #     return Response(data)
 
 class PostCategoryRetrieveAPIView(APIView):
     def get(self, request, pk):
