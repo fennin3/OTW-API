@@ -7,7 +7,6 @@ from .models import PostCategory, WeeklyPost, WeeklyWinner
 from rest_framework.permissions import IsAuthenticated
 
 class PostCategoryListAPIView(APIView):
-    permission_classes = [IsAuthenticated]
     def get(self, request):
         postcats = PostCategory.objects.all()
         data = PostCategorySerializer(postcats, many=True).data
