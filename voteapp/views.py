@@ -10,7 +10,7 @@ from rest_framework.authentication import TokenAuthentication
 class PostCategoryListAPIView(APIView):
     permission_classes = (IsAuthenticated,)
     authentication_classes = (TokenAuthentication)
-    def get(self, request):
+    def list(self, request):
         postcats = PostCategory.objects.all()
         data = PostCategorySerializer(postcats, many=True).data
         self.check_object_permissions(self.request, postcats)
