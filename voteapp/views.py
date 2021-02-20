@@ -4,8 +4,10 @@ from rest_framework.views import APIView
 from .serializers import PostCategorySerializer, WeeklyPostMainSerializer, WeeklyWinnerSerializer
 from rest_framework.response import Response
 from .models import PostCategory, WeeklyPost, WeeklyWinner
+from rest_framework.authentication import TokenAuthentication
 
 class PostCategoryListAPIView(APIView):
+    permission_classes = [TokenAuthentication]
     def get(self, request):
         postcats = PostCategory.objects.all()
         data = PostCategorySerializer(postcats, many=True).data
