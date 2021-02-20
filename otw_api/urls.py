@@ -19,6 +19,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework_swagger.views import get_swagger_view
+from rest_framework_simplejwt import views as jwt_views
 
 schema_view = get_swagger_view(title="OTW API Documentation")
 
@@ -29,6 +30,11 @@ urlpatterns = [
     path('api/voteapp/', include('voteapp.urls')),
     path('api/stories/',include('stories.urls')),
     path('api/documentation/', schema_view),
+
+    # JWT URLS
+    path('api/login/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
+    
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

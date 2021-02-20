@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from django.contrib.auth import get_user_model, password_validation
 from django.contrib.auth.models import BaseUserManager
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework.response import Response
 
 
 User = get_user_model()
@@ -29,7 +31,6 @@ class AuthUserSerializer(serializers.ModelSerializer):
 
 class EmptySerializer(serializers.Serializer):
     pass
-
 
 
 

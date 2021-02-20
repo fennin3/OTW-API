@@ -7,6 +7,7 @@ from . import serializers
 from .utils import get_and_authenticate_user, create_user_account
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model, logout
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 
 User = get_user_model()
@@ -62,3 +63,4 @@ class AuthViewSet(viewsets.GenericViewSet):
         if self.action in self.serializer_classes.keys():
             return self.serializer_classes[self.action]
         return super().get_serializer_class()
+
