@@ -8,8 +8,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 
 class PostCategoryListAPIView(generics.ListAPIView):
-    permission_classes = (IsAuthenticated)
-    authentication_classes = (TokenAuthentication)
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
     serializer_class = PostCategorySerializer
     queryset = PostCategory.objects.all()
 
