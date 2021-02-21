@@ -5,10 +5,12 @@ from .serializers import PostCategorySerializer, WeeklyPostMainSerializer, Weekl
 from rest_framework.response import Response
 from .models import PostCategory, WeeklyPost, WeeklyWinner
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import TokenAuthentication
+# from rest_framework.authentication import TokenAuthentication
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 class PostCategoryListAPIView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
+    authentication_class = JSONWebTokenAuthentication
     serializer_class = PostCategorySerializer
     queryset = PostCategory.objects.all()
 
