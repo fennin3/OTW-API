@@ -5,11 +5,52 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model, password_validation
 from django.contrib.auth.models import BaseUserManager
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework.response import Response
+# from rest_framework.response import Response
+from django.contrib.auth import authenticate
+from rest_framework_jwt.settings import api_settings
+from django.contrib.auth.models import update_last_login
+
+JWT_PAYLOAD_HANDLER = api_settings.JWT_PAYLOAD_HANDLER
+JWT_ENCODE_HANDLER = api_settings.JWT_ENCODE_HANDLER
+
 
 
 User = get_user_model()
 
+
+
+
+
+class UserLoginSerializer2(serializers.Serializer):
+
+    username = serializers.CharField(max_length=255)
+    password = serializers.CharField(max_length=128, write_only=True)
+    token = serializers.CharField(max_length=255, read_only=True)
+
+    def validate(self, data):
+        username = data.get("username", None)
+        password = data.get("password", None)
+        user = authenticate(username=username, password=password)
+        if user is None:
+            raise serializers.ValidationError(
+                'A user with this username and password is not found.'
+            )
+        try:
+            payload = JWT_PAYLOAD_HANDLER(user)
+            jwt_token = JWT_ENCODE_HANDLER(payload)
+            update_last_login(None, user)
+        except User.DoesNotExist:
+            raise serializers.ValidationError(
+                'User with given email and password does not exists'
+            )
+        return {
+            'username':user.username,
+            'token': jwt_token
+        }
+
+
+
+# Initial Serializers
 class UserLoginSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=300, required=True)
     password = serializers.CharField(required=True, write_only=True)
@@ -31,6 +72,7 @@ class AuthUserSerializer(serializers.ModelSerializer):
 
 class EmptySerializer(serializers.Serializer):
     pass
+
 
 
 

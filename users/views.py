@@ -8,11 +8,41 @@ from .utils import get_and_authenticate_user, create_user_account
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model, logout
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework.views import APIView
 
 
 User = get_user_model()
 
 
+
+class UserLoginView(APIView):
+    queryset = User.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = serializers.UserLoginSerializer2
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        u_name = serializer.data['username']
+        user_ = User.objects.get(username=u_name)
+        response = {
+            'success' : 'True',
+            'status code' : status.HTTP_200_OK,
+            'message': 'User logged in  successfully',
+            'token' : serializer.data['token'],
+            'id':user_.id,
+            'email':user_.email,
+            'username':user_.username          
+
+            }
+        status_code = status.HTTP_200_OK
+
+        return Response(response, status=status_code)
+
+
+
+
+# Initial Views
 class AuthViewSet(viewsets.GenericViewSet):
     authentication_classes = ()
     permission_classes = ()
@@ -20,7 +50,7 @@ class AuthViewSet(viewsets.GenericViewSet):
     permission_classes = [AllowAny, ]
     serializer_class = serializers.EmptySerializer
     serializer_classes = {
-        'login': serializers.UserLoginSerializer,
+        # 'login': serializers.UserLoginSerializer,
         'register': serializers.UserRegisterSerializer,
         'password_change': serializers.PasswordChangeSerializer,
     }
