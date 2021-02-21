@@ -29,7 +29,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('users.urls')),
     path('api/userprofile/', include('user_profile.urls')),
-    path('api/try/', UserLoginView.as_view(),name="login_"),
+    path('api/login/', UserLoginView.as_view(),name="login_"),
     path('api/voteapp/', include('voteapp.urls')),
     path('api/stories/',include('stories.urls')),
     path('api/documentation/', schema_view),
