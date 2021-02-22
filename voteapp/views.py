@@ -23,6 +23,8 @@ class PostCategoryListAPIView(generics.ListAPIView):
     #     return Response(data)
 
 class PostCategoryRetrieveAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JSONWebTokenAuthentication]
     def get(self, request, pk):
         postcat = get_object_or_404(PostCategory,pk=pk)
         data = PostCategorySerializer(postcat).data
@@ -30,12 +32,16 @@ class PostCategoryRetrieveAPIView(APIView):
 
 
 class WeeklyPostListAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JSONWebTokenAuthentication]
     def get(self, request):
         posts = WeeklyPost.objects.all()
         data = WeeklyPostMainSerializer(posts, many=True).data
         return Response(data)
 
 class WeeklyWinnerListAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JSONWebTokenAuthentication]
     def get(self, request):
         winners = WeeklyWinner.objects.all()
         data = WeeklyWinnerSerializer(winners , many=True).data

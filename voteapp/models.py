@@ -23,6 +23,7 @@ class WeeklyPost(models.Model):
     category = models.ForeignKey(PostCategory, on_delete=models.CASCADE, null=True, blank=True, related_name="weekly_posts")
     image = models.ImageField(upload_to='weekly_post/images/')
     date_posted = models.DateTimeField(auto_now_add=True)
+    week_number = models.IntegerField(default=1)
 
     def __str__(self):
         return f"{self.category} post - {self.date_posted}"
