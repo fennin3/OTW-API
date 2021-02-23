@@ -31,13 +31,11 @@ class PostCategoryRetrieveAPIView(APIView):
         return Response(data)
 
 
-class WeeklyPostListAPIView(APIView):
+class WeeklyPostListAPIView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JSONWebTokenAuthentication]
-    def get(self, request):
-        posts = WeeklyPost.objects.all()
-        data = WeeklyPostMainSerializer(posts, many=True).data
-        return Response(data)
+    serializer_class = WeeklyPostMainSerializer
+    queryset = WeeklyPost.objects.all()
 
 class WeeklyWinnerListAPIView(APIView):
     permission_classes = [IsAuthenticated]
