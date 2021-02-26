@@ -14,13 +14,6 @@ class PostCategoryListAPIView(generics.ListAPIView):
     serializer_class = PostCategorySerializer
     queryset = PostCategory.objects.all()
 
-    # permission_classes = (IsAuthenticated,)
-    # authentication_classes = (TokenAuthentication)
-    # def list(self, request):
-    #     postcats = PostCategory.objects.all()
-    #     data = PostCategorySerializer(postcats, many=True).data
-    #     self.check_object_permissions(self.request, postcats)
-    #     return Response(data)
 
 class PostCategoryRetrieveAPIView(APIView):
     permission_classes = [IsAuthenticated]
